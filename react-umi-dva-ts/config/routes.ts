@@ -2,8 +2,12 @@ export default [
   {
     path: '/',
     layout: false,
-    // component: './index',
-    routes: [],
+    routes: [
+      {
+        path: '/user',
+        component: '../layouts/UserLayout',
+      }
+    ],
   },
   {
     layout: false,
