@@ -6,6 +6,13 @@ export default [
       {
         path: '/user',
         component: '../layouts/UserLayout',
+        routes:[
+          {
+            name: '登录',
+            path: '/user/login',
+            component: './User/Login',
+          },
+        ]
       }
     ],
   },
