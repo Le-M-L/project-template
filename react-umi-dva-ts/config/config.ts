@@ -5,7 +5,7 @@ import defaultSettings from './defaultSettings';
 
 const { REACT_APP_ENV } = process.env;
 const IS_PROD = process.env.NODE_ENV !== 'development';
-
+const { resolve } = require('path')
 export default defineConfig({
   // 配置是否让生成的文件包含 hash 后缀，通常用于增量发布和避免浏览器加载缓存。
   hash: true,
@@ -66,4 +66,5 @@ export default defineConfig({
   // 使用 esbuild 作为压缩器。
   // https://umijs.org/plugins/plugin-esbuild
   // esbuild: {},
+  alias: {'/#/': resolve(__dirname, '../types'),}
 });

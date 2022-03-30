@@ -24,6 +24,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
             <Helmet>
                 <title>{title}</title>
                 <meta name="description" content={title} />
+                <link rel="stylesheet" type='test/css' href={`./css/UserLayout.less?time=${new Date()}`} />
             </Helmet>
             <div className={styles.container}>
                 {children}

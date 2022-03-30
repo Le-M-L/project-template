@@ -1,9 +1,9 @@
 // 运行时配置
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import type { CurrentUser } from '@/models/user';
-
 import GlobalLoading from '@/components/GlobalLoading';
 import { getCurrentUser } from '@/services/user';
+import "./utils/http"
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <GlobalLoading />,
@@ -18,6 +18,7 @@ export async function getInitialState(): Promise<{
   currentUser?: CurrentUser;
   fetchUserInfo?: () => Promise<CurrentUser | undefined>;
 }> {
+  // 获取当前用户信息
   const currentUser = await getCurrentUser();
   if (currentUser) {
     localStorage.setItem('lastLoginTime', currentUser.lastLoginTime);

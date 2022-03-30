@@ -20,19 +20,21 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@@/*": ["./src/.umi/*"]
+      "@@/*": ["./src/.umi/*"],
+      "/#/*": ["types/*"]
     }
   },
   "include": [
     "mock/**/*",
     "src/**/*",
     "config/**/*",
+    "types/**/*",
     ".umirc.ts",
-    "typings/**/*",
+    "typings/**/*.d.ts",
     "typings.d.ts",
     ".eslintrc.js",
     ".stylelintrc.js",
-    ".prettierrc.js",
+    ".prettierrc.js", 
   ],
   "exclude": [
     "node_modules",
