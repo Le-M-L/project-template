@@ -12,4 +12,11 @@ export default defineConfig({
     babelPlugins: [],
     babelOptions: {},
   },
+  define: {
+    'process.env': {
+      'API_URL': 'https://zxlzy.top',
+      'URL_PREFIX': '/api',
+      'SHORT_NAME': '' // 短名
+    }
+  }
 });

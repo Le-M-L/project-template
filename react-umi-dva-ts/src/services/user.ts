@@ -1,11 +1,13 @@
 import type { CurrentUser } from '@/models/user';
-import axios from 'axios';
+import { defHttp } from "@/utils/http"
 /**
  * 查询当前用户
  */
 export function getCurrentUser() {
-  return axios
-    .get('/authUser/info', { xsrfCookieName: 'token', xsrfHeaderName: 'token' })
+  return defHttp
+    .get({
+      url: '/authUser/info',
+    })
     .then((res: any) => {
       console.log(res)
       console.log('getCurrentUser succeed', res);

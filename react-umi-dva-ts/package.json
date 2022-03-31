@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version":"0.0.1",
   "scripts": {
     "start": "cross-env UMI_ENV=dev umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",

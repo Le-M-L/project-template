@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { defHttp } from "@/utils/http"
 
 
 export interface LoginParamsType {
@@ -14,10 +14,9 @@ export interface LoginParamsType {
  * 用户登录
  */
 
-export async function login(loginParams: LoginParamsType) {
-  return axios.post('/authUser/login', loginParams)
+export async function login(params: LoginParamsType) {
+  return defHttp.post({url:'/authUser/login', params})
 }
-
 
 export interface UserRegister{
   username: string; // 用户名

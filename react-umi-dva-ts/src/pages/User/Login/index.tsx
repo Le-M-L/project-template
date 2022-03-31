@@ -35,7 +35,8 @@ const Login: React.FC = () => {
     document.cookie = `token=${data.token}`
     console.log(data)
   }
-  console.log(initialState)
+  const { user, fetchUser } = useModel('useUserModel', model => ({ user: model.user, fetchUser: model.fetchUser }));
+  console.log(user,fetchUser)
 
   return <div className={styles.main} >
     <LoginForm initialValues={{
