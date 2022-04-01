@@ -1,5 +1,5 @@
-import type { CurrentUser } from '@/models/user';
 import { defHttp } from "@/utils/http"
+
 /**
  * 查询当前用户
  */
