@@ -10,7 +10,7 @@ import { pick } from 'lodash-es';
  */
 
 interface BasicStore {
-
+    [TOKEN_KEY]: string
 }
 
 type LocalStore = BasicStore;
@@ -94,9 +94,10 @@ export class Persistent {
         }
     }
 }
-
 /** 监听浏览器刷新事件 确保缓存数据唯一 */
 window.addEventListener('beforeunload', function () {
+    console.log(ls.get(APP_LOCAL_CACHE_KEY))
+    debugger
  // TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
   ls.set(APP_LOCAL_CACHE_KEY, {
     ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),

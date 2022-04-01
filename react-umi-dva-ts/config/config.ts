@@ -18,6 +18,7 @@ export default defineConfig({
   dva: {
     // 启用dva 热重载
     hmr: true,
+    immer: true
   },
   // layout 侧栏
   layout: {

@@ -1,20 +1,27 @@
 
-import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
+import { Effect, ImmerReducer, Subscription } from 'umi';
+import { login } from "@/services/login"
+import { Persistent } from "@/utils/cache/persistent"
+import { TOKEN_KEY } from "@/enums/cacheEnum"
+import type { UserInfo } from '/#/store';
 
 export interface UserModelState {
   token: string;
+  userInfo: (UserInfo | null)
 }
 
 export interface UserModelType {
   namespace: 'userInfo';
   state: UserModelState;
   effects: {
-    query: Effect;
+    login: Effect;
   };
   reducers: {
-    save: Reducer<UserModelState>;
-    // 启用 immer 之后
-    // save: ImmerReducer<UserModelState>;
+    // 启用 immer 之后 
+    /** 设置token */
+    setToken: ImmerReducer<UserModelState>;
+    /** 获取用户信息 */
+    setUserInfo: ImmerReducer<UserModelState>;
   };
   subscriptions: { setup: Subscription };
 }
@@ -22,23 +29,25 @@ export interface UserModelType {
 const UserModel: UserModelType = {
   namespace: 'userInfo',
   state: {
-    token: '1',
+    token: '',
+    userInfo: null
   },
-
   effects: {
-    *query({ payload }, { call, put }) { },
+    *login({ payload }, { call, put }) {
+      const data = yield call(login, payload);
+      // 派发到reducers中
+      yield put({ type: 'setToken', payload: data })
+    },
   },
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        ...action.payload,
-      };
+    setToken(state, { payload }) {
+      state.token = payload.token;
+      Persistent.setLocal(TOKEN_KEY, state.token, true)
     },
-    // 启用 immer 之后
-    // save(state, action) {
-    //   state.name = action.payload;
-    // },
+    setUserInfo(state, { payload }) {
+      state.userInfo = payload;
+      Persistent.setLocal(TOKEN_KEY, state.token, true)
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

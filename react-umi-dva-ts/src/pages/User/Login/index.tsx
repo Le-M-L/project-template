@@ -29,16 +29,19 @@ const phoneLogin = () => {
   return <ProFormText fieldProps={{ size: "large" }} placeholder={'请输入手机号'} />
 }
 
-const Login: React.FC<IProps> = (props) => {
-  console.log(props)
+const Login: React.FC<IProps> = ({dispatch}) => {
+
   // 扫码状态 通过微信登录
   const [loginType, setLoginType] = useState<LoginType>('account');
   const [submitting, setSubmitting] = useState<boolean>(false);
 
   // 获取全局状态
   const handleSubmit = async (values: LoginParamsType) => {
-    let { data } = await login(values);
-    document.cookie = `token=${data.token}`
+    // let data = await login(values);
+    dispatch({
+      type:'userInfo/login',
+      payload:values
+    })
     console.log(data)
   }
 
