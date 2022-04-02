@@ -4,7 +4,6 @@ import { Tabs } from "antd"
 import { UserOutlined, LockOutlined, } from '@ant-design/icons';
 import { ProFormText, LoginForm, ProFormCheckbox } from '@ant-design/pro-form';
 import type { LoginParamsType } from "@/services/login"
-import { login } from '@/services/login';
 import styles from './index.less';
 
 type LoginType = 'phone' | 'account';
@@ -37,12 +36,10 @@ const Login: React.FC<IProps> = ({dispatch}) => {
 
   // 获取全局状态
   const handleSubmit = async (values: LoginParamsType) => {
-    // let data = await login(values);
     dispatch({
       type:'userInfo/login',
       payload:values
     })
-    console.log(data)
   }
 
   return <div className={styles.main} >

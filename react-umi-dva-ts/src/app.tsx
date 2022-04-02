@@ -1,8 +1,10 @@
 // 运行时配置
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import type { CurrentUser } from '@/models/user';
+import type { UserInfo } from '/#/store';
 import GlobalLoading from '@/components/GlobalLoading';
-import { getCurrentUser } from '@/services/user';
+import { getUserInfo } from '@/services/user';
+import { Persistent } from "./utils/cache/persistent"
+import { USER_INFO_KEY } from "@/enums/cacheEnum"
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <GlobalLoading />,
@@ -14,16 +16,16 @@ export const initialStateConfig = {
  **/
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: CurrentUser;
-  fetchUserInfo?: () => Promise<CurrentUser | undefined>;
+  userInfo?: UserInfo | null;
+  fetchUserInfo?: () => Promise<UserInfo | undefined>;
 }> {
   // 获取当前用户信息
-  const currentUser = await getCurrentUser();
-  if (currentUser) {
-    localStorage.setItem('lastLoginTime', currentUser.lastLoginTime);
+  const userInfo = await getUserInfo();
+  if (userInfo) {
+    Persistent.setLocal(USER_INFO_KEY, userInfo)
   }
   return {
-    currentUser: currentUser ?? undefined,
+    userInfo: Persistent.getLocal(USER_INFO_KEY),
   };
 }
 

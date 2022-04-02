@@ -13,6 +13,17 @@ export default [
             component: './User/Login',
           },
         ]
+      },
+      {
+        path:'/',
+        component: '../layouts/BasicLayout',
+        routes:[
+          {
+            name:'首页',
+            path:'/',
+            component: './Index',
+          }
+        ]
       }
     ],
   },

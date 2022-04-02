@@ -4,13 +4,14 @@ import { createLocalStorage, createSessionStorage } from "@/utils/cache"
 import { TOKEN_KEY, USER_INFO_KEY, APP_SESSION_CACHE_KEY, APP_LOCAL_CACHE_KEY } from "@/enums/cacheEnum"
 import { Memory } from "./memory";
 import { pick } from 'lodash-es';
-
+import { UserInfo } from "/#/store"
 /**
  * 用于储存本地缓存的类型
  */
 
 interface BasicStore {
-    [TOKEN_KEY]: string
+    [TOKEN_KEY]: string;
+    [USER_INFO_KEY]:UserInfo;
 }
 
 type LocalStore = BasicStore;
@@ -94,16 +95,18 @@ export class Persistent {
         }
     }
 }
-/** 监听浏览器刷新事件 确保缓存数据唯一 */
+
+
+ /** 监听浏览器刷新事件 确保缓存数据唯一 */
 window.addEventListener('beforeunload', function () {
-    console.log(ls.get(APP_LOCAL_CACHE_KEY))
-    debugger
- // TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
-  ls.set(APP_LOCAL_CACHE_KEY, {
-    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
+// TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
+ ls.set(APP_LOCAL_CACHE_KEY, {
+    ...localMemory.getCache,
+    // ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
   });
   ss.set(APP_SESSION_CACHE_KEY, {
-    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
+    ...localMemory.getCache,
+    // ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY]),
   });
 })
 

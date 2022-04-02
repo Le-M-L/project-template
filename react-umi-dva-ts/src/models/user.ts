@@ -1,8 +1,9 @@
 
 import { Effect, ImmerReducer, Subscription } from 'umi';
 import { login } from "@/services/login"
+import { getUserInfo } from "@/services/user"
 import { Persistent } from "@/utils/cache/persistent"
-import { TOKEN_KEY } from "@/enums/cacheEnum"
+import { TOKEN_KEY, USER_INFO_KEY } from "@/enums/cacheEnum"
 import type { UserInfo } from '/#/store';
 
 export interface UserModelState {
@@ -29,24 +30,25 @@ export interface UserModelType {
 const UserModel: UserModelType = {
   namespace: 'userInfo',
   state: {
-    token: '',
-    userInfo: null
+    token: Persistent.getLocal(TOKEN_KEY) as string,
+    userInfo: Persistent.getLocal(USER_INFO_KEY)
   },
-  effects: {
+  effects: { // 派发到reducers中
     *login({ payload }, { call, put }) {
-      const data = yield call(login, payload);
-      // 派发到reducers中
-      yield put({ type: 'setToken', payload: data })
+      const { token } = yield call(login, payload);
+      yield put({ type: 'setToken', payload: token })
+      const userInfo = yield call(getUserInfo, {});
+      yield put({ type: 'setUserInfo', payload: userInfo })
     },
   },
   reducers: {
     setToken(state, { payload }) {
-      state.token = payload.token;
-      Persistent.setLocal(TOKEN_KEY, state.token, true)
+      state.token = payload;
+      Persistent.setLocal(TOKEN_KEY, payload, true)
     },
     setUserInfo(state, { payload }) {
       state.userInfo = payload;
-      Persistent.setLocal(TOKEN_KEY, state.token, true)
+      Persistent.setLocal(USER_INFO_KEY, payload, true)
     }
   },
   subscriptions: {
@@ -63,31 +65,4 @@ const UserModel: UserModelType = {
 };
 
 export default UserModel;
-
-
-
-/**
- * 当前登录用户信息
- */
-export interface CurrentUser {
-  _id: string;
-  avatarUrl: string;
-  nickName: string;
-  gender: number;
-  jobStatus: number;
-  city: string;
-  email: string;
-  province: string;
-  country: string;
-  language: string;
-  authority: string;
-  favourQuestionIds: string[];
-  thumbCommentIds: string[];
-  interests: string[];
-  score: number;
-  profile: string;
-  _createTime: Date;
-  _updateTime: Date;
-}
-
 
