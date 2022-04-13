@@ -1,12 +1,11 @@
 export default [
   {
     path: '/',
-    layout: false,
     routes: [
       {
         path: '/user',
         component: '../layouts/UserLayout',
-        routes:[
+        routes: [
           {
             name: '登录',
             path: '/user/login',
@@ -15,12 +14,12 @@ export default [
         ]
       },
       {
-        path:'/',
+        path: '/',
         component: '../layouts/BasicLayout',
-        routes:[
+        routes: [
           {
-            name:'首页',
-            path:'/',
+            name: '首页',
+            path: '/',
             component: './Index',
           }
         ]
