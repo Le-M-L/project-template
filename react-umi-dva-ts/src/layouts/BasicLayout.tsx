@@ -1,15 +1,18 @@
-import type { BasicLayoutProps as ProLayoutProps, MenuDataItem } from '@ant-design/pro-layout';
 import React, { useEffect } from "react"
+import { Link, useAccess } from 'umi';
 import ProLayout from '@ant-design/pro-layout';
 import defaultSettings from '../../config/defaultSettings';
-import type { AccessType } from '@/access';
 import menu from '../../config/headerMenu';
-import {  Link, useAccess } from 'umi';
+
+import type { BasicLayoutProps as ProLayoutProps, MenuDataItem } from '@ant-design/pro-layout';
+import type { AccessType } from '@/access';
+
 export interface BasicLayoutProps extends ProLayoutProps {
     route: ProLayoutProps['route'] & {
         authority: string[];
     };
 }
+
 /** 菜单权限 */
 const menuDataRender = (menuList: MenuDataItem[], access: AccessType): MenuDataItem[] => {
     return menuList.filter((menuItem) => {
@@ -33,6 +36,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
                 }
                 return <Link to={menuItemProps.path}>{defaultDom}</Link>;
             }}
+            splitMenus
             menuDataRender={() => menuDataRender(menu, access)}
         >44</ProLayout>
     )
