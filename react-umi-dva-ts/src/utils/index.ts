@@ -1,4 +1,4 @@
-
+import { parse } from 'querystring';
 import { isObject } from "./is"
 
 /**
@@ -27,3 +27,5 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
     }
     return src;
 }
+
+export const getPageQuery = () => parse(window.location.href.split('?')[1]);

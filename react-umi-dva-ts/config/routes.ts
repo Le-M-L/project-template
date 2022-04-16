@@ -21,6 +21,12 @@ export default [
             name: '首页',
             path: '/',
             component: './Index',
+          },
+          {
+            name:'全部游戏',
+            path:'/allGames',
+            component: './allGames',
+            wrappers: ['@/wrappers/auth'],
           }
         ]
       }

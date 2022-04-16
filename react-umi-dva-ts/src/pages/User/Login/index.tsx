@@ -28,18 +28,15 @@ const phoneLogin = () => {
   return <ProFormText fieldProps={{ size: "large" }} placeholder={'请输入手机号'} />
 }
 
-const Login: React.FC<IProps> = ({dispatch}) => {
+const Login: React.FC<IProps> = ({ dispatch, location }) => {
 
   // 扫码状态 通过微信登录
-  const [loginType, setLoginType] = useState<LoginType>('account');
-  const [submitting, setSubmitting] = useState<boolean>(false);
-
+  const [loginType, setLoginType] = useState < LoginType > ('account');
+  const [submitting, setSubmitting] = useState < boolean > (false);
+  const { query: { redirect } } = location
   // 获取全局状态
   const handleSubmit = async (values: LoginParamsType) => {
-    dispatch({
-      type:'userInfo/login',
-      payload:values
-    })
+    dispatch({ type: 'userInfo/login', payload: values });
   }
 
   return <div className={styles.main} >
@@ -48,7 +45,7 @@ const Login: React.FC<IProps> = ({dispatch}) => {
       password: 'leml123456'
     }} logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png" title="Github"
       subTitle="全球最大同性交友网站" onFinish={async (values) => handleSubmit(values as LoginParamsType)} >
-      
+
       <Tabs accessKey={loginType} onChange={(activeKey) => setLoginType(activeKey as LoginType)} >
         <Tabs.TabPane key={"account"} tab="账号密码登录" ></Tabs.TabPane>
         <Tabs.TabPane key={"phone"} tab="手机号登录" ></Tabs.TabPane>

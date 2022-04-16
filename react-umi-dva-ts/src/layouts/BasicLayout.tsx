@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Link, useAccess } from 'umi';
+import { Link, useAccess, useModel, useDispatch } from 'umi';
 import ProLayout from '@ant-design/pro-layout';
 import defaultSettings from '../../config/defaultSettings';
 import menu from '../../config/headerMenu';
@@ -23,6 +23,12 @@ const menuDataRender = (menuList: MenuDataItem[], access: AccessType): MenuDataI
 /** 基本布局 */
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     const access = useAccess();
+    const { children } = props;
+    const dispatch = useDispatch();
+    dispatch({
+        type:'userInfo/logout',
+        payload:true
+    })
     return (
         <ProLayout
             title="游戏网"
@@ -38,7 +44,10 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
             }}
             splitMenus
             menuDataRender={() => menuDataRender(menu, access)}
-        >44</ProLayout>
+            headerTitleRender={() => <div>left</div>}
+            headerContentRender={() => <div>23</div>}
+            rightContentRender={() => <div>right</div>}
+        >{children}</ProLayout>
     )
 }
 

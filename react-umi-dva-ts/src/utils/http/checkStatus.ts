@@ -1,7 +1,7 @@
 import type { ErrorMessageMode } from '/#/axios';
 import { useMessage } from '@/hooks/web/useMessage';
 import { SessionTimeoutProcessingEnum } from '@/enums/appEnum';
-import { useModel } from '@@/plugin-model/useModel';
+import { useModel } from 'umi';
 
 const { createMessage, createErrorModal } = useMessage();
 const error = createMessage.error!;
@@ -12,7 +12,9 @@ export function checkStatus(
   msg: string,
   errorMessageMode: ErrorMessageMode = 'message',
 ): void {
-  const {initialState} = useModel('@@initialState');
+  const {initialState} = useModel('user', model => {
+    console.log(model)
+  });
   let errMessage = '';
   switch (status) {
     case 400:
