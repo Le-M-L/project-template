@@ -3,6 +3,7 @@
 import type { AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from '/#/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
+import { history } from 'umi';
 import { VAxios } from './Axios';
 import { checkStatus } from './checkStatus';
 import { useMessage } from '@/hooks/web/useMessage';
@@ -53,6 +54,7 @@ const transform: AxiosTransform = {
     switch (code) {
       case ResultEnum.TIMEOUT:
         timeoutMsg = '登录已过期，请重新登录!';
+        history.push('/user/login');
         break;
       case ResultEnum.PERMISSION_FAILED:
          timeoutMsg = '没有权限!';

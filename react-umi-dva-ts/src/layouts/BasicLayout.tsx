@@ -3,7 +3,7 @@ import { Link, useAccess, useModel, useDispatch } from 'umi';
 import ProLayout from '@ant-design/pro-layout';
 import defaultSettings from '../../config/defaultSettings';
 import menu from '../../config/headerMenu';
-
+import RightContent from "@/components/GlobalHeader/RightContent"
 import type { BasicLayoutProps as ProLayoutProps, MenuDataItem } from '@ant-design/pro-layout';
 import type { AccessType } from '@/access';
 
@@ -46,7 +46,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
             menuDataRender={() => menuDataRender(menu, access)}
             headerTitleRender={() => <div>left</div>}
             headerContentRender={() => <div>23</div>}
-            rightContentRender={() => <div>right</div>}
+            rightContentRender={() => <RightContent/>}
         >{children}</ProLayout>
     )
 }
